@@ -1,6 +1,7 @@
 ## autopu
 	autopu is created for my wife as a temporary solution and alternative to 
-	setting up USPS pickups for sales on Etsy.
+	setting up USPS pickups for sales on Etsy. This is really just a personal
+	project, but if anyone could benefit from using it, farout.
 
 ## Goal
 	* Everyday @1am create browser instance(etsy.com)
@@ -9,7 +10,8 @@
 	
 
 ## Code Contribution Guidelines
-    * Fork away and refactor | add code. I encourage pull requests to allow for review and discussion of code changes.
+    * Fork away and refactor | add code. I encourage pull requests to allow for 
+    review and discussion of code changes.
     * When creating a pull request:
         * Have test cases for the new code.
         * Add documentation if you are adding new features or changing functionality.
