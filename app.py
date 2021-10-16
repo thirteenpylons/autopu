@@ -78,7 +78,7 @@ def pickup():
 	loc_drp = driver.find_element(By.XPATH, value='//*[@id="packageLocation"]')
 	loc_drp.click()
 
-	#### NEED TO VERIFY ####
+	#### NEED TO VERIFY PATH ####
 	fdoor = driver.find_element(By.XPATH, value='/html/body/div[5]/div/div/div[6]/div[1]/div/select/option[4]')
 	fdoor.click()
 
@@ -94,3 +94,8 @@ def pickup():
 	start_date.send_keys()
 
 	today = datetime.date.today()
+
+
+	# TODO: log scheduled pickup for verification
+
+	driver.quit()
