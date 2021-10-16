@@ -36,7 +36,7 @@ def execute():
 	shop_btn.click()
 
 	# find sales tab
-	orders_btn = driver.find_element(By.XPATH, value='/html/body/div[4]/div/div[1]/div/div[1]/div[3]/div/div[1]/div[2]/ul/li[5]/a')
+	orders_btn = driver.find_element(By.XPATH, value='/html/body/div[4]/div/div[1]/div/div[3]/div/div[2]/div/div[1]/div[2]/div/div[2]/div[2]/a')
 	orders_btn.click()
 
 	order_qty = driver.find_element(By.XPATH, value='/html/body/div[4]/div/div[1]/div/div[3]/div/div[3]/div/div/div[1]/div[2]/nav/ul/li[1]/a/span[2]').text
