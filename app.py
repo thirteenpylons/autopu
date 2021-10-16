@@ -86,4 +86,11 @@ def pickup():
 	reg_radio.click()
 
 	# anticipate next day will have to use datetime.now
-	# locate next available day on calandar from datetime.now
+	# avoid calendar by using 'recurring pickup tool'(start/stop same day)
+	pu_tool = driver.find_element(By.XPATH, value='/html/body/div[6]/div/div/div[4]/div[4]/div[4]/div[1]/h4')
+	pu_tool.click()
+
+	start_date = driver.find_element(By.XPATH, value='//*[@id="recurring-pickup-tool-start-date-cal"]')
+	start_date.send_keys()
+
+	today = datetime.date.today()
