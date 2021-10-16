@@ -32,7 +32,7 @@ def execute():
 	pwd_in.send_keys(PWD + '\ue007')
 
 	# locate shop button
-	shop_btn = driver.find_element(By.XPATH, value='/html/body/div[3]/header/div[4]/nav/ul/li[2]/span/a/span[1]/svg')
+	shop_btn = driver.find_element(By.XPATH, value='/html/body/div[3]/header/div[4]/nav/ul/li[2]/span/a')
 	shop_btn.click()
 
 	# find sales tab
