@@ -130,4 +130,4 @@ dmypy.json
 
 
 # more
-.creds.py
+creds.py
