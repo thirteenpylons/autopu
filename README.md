@@ -2,6 +2,7 @@
 	autopu is created for my wife as a temporary solution and alternative to 
 	setting up USPS pickups for sales on Etsy. This is really just a personal
 	project, but if anyone could benefit from using it, farout.
+	I'm also aware that this is not a 'conventional' approach.
 
 ## Goal
 	* Everyday @1am create browser instance(etsy.com)
