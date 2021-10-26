@@ -14,7 +14,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-from .creds as CREDS
+import creds as CREDS
 
 
 def execute():
@@ -23,7 +23,7 @@ def execute():
 	"""
 
 	#### This code can be modularized ####
-	driver = webdriver.Chrome()
+	driver = webdriver.Chrome(executable_path='./chromedriver.exe')
 	driver.get('https://www.etsy.com')
 	driver.implicitly_wait(15)
 
@@ -31,9 +31,9 @@ def execute():
 	sign_in.click()
 
 	email_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_email_field"]')
-	email_in.send_keys(CREDS.ETSY_NAME)
+	email_in.send_keys(CREDS.UNAME)
 	pwd_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_password_field"]')
-	pwd_in.send_keys(CREDS.ETSY_PWD + '\ue007')
+	pwd_in.send_keys(CREDS.PWD + '\ue007')
 
 	shop_btn = driver.find_element(By.XPATH, value='/html/body/div[3]/header/div[4]/nav/ul/li[2]/span/a')
 	shop_btn.click()
