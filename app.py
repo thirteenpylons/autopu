@@ -23,7 +23,7 @@ def execute():
 	"""
 
 	#### This code can be modularized ####
-	driver = webdriver.Chrome(executable_path='./chromedriver.exe')
+	driver = webdriver.Chrome(executable_path='/usr/lib/chromium-browser/chromedriver')
 	driver.get('https://www.etsy.com')
 	driver.implicitly_wait(15)
 
