@@ -21,31 +21,28 @@ def execute():
 	"""
 	Executes the application
 	"""
-
+	try:
 	#### This code can be modularized ####
-	driver = webdriver.Chrome(executable_path='/usr/lib/chromium-browser/chromedriver')
-	driver.get('https://www.etsy.com')
-	driver.implicitly_wait(15)
+		driver = webdriver.Chrome(executable_path='/usr/lib/chromium-browser/chromedriver')
+		driver.get('https://www.etsy.com/your/shops/me/dashboard?ref=hdr-mcpa')
+		driver.implicitly_wait(15)
 
-	sign_in = driver.find_element(By.XPATH, value='/html/body/div[3]/header/div[4]/nav/ul/li[1]/button')
-	sign_in.click()
+		email_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_email_field"]')
+		email_in.send_keys(CREDS.UNAME)
+		pwd_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_password_field"]')
+		pwd_in.send_keys(CREDS.PWD + '\ue007')
 
-	email_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_email_field"]')
-	email_in.send_keys(CREDS.UNAME)
-	pwd_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_password_field"]')
-	pwd_in.send_keys(CREDS.PWD + '\ue007')
+		orders_btn = driver.find_element(By.XPATH, value='//*[@id="root"]/div/div[1]/div[3]/div/div[1]/div[2]/ul/li[5]/a')
+		orders_btn.click()
 
-	shop_btn = driver.find_element(By.XPATH, value='/html/body/div[3]/header/div[4]/nav/ul/li[2]/span/a')
-	shop_btn.click()
-
-	orders_btn = driver.find_element(By.XPATH, value='//*[@id="root"]/div/div[3]/div/div[3]/div[1]/div[1]/div[2]/div/div[2]/div[2]/a')
-	orders_btn.click()
-
-	order_qty = driver.find_element(By.XPATH, value='//*[@id="browse-view"]/div/div[1]/div[2]/nav/ul/li[1]/a/span[2]').text
-	
-	# check for any new orders
-	if int(order_qty) > 0:
-		pickup()
+		order_qty = driver.find_element(By.XPATH, value='//*[@id="browse-view"]/div/div[1]/div[2]/nav/ul/li[1]/a/span[2]').text
+		
+		# check for any new orders
+		if int(order_qty) > 0:
+			pickup()
+	except:
+		print('Something went wrong...')
+		driver.quit()
 
 
 	driver.quit()
