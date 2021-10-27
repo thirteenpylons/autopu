@@ -28,9 +28,9 @@ def execute():
 		driver.implicitly_wait(15)
 
 		email_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_email_field"]')
-		email_in.send_keys(CREDS.UNAME)
+		email_in.send_keys(CREDS.ETSY_UNAME)
 		pwd_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_password_field"]')
-		pwd_in.send_keys(CREDS.PWD + '\ue007')
+		pwd_in.send_keys(CREDS.ETSY_PWD + '\ue007')
 
 		orders_btn = driver.find_element(By.XPATH, value='//*[@id="root"]/div/div[1]/div[3]/div/div[1]/div[2]/ul/li[5]/a')
 		orders_btn.click()
@@ -44,8 +44,8 @@ def execute():
 		print('Something went wrong...')
 		driver.quit()
 
-
 	driver.quit()
+
 
 def pickup():
 	"""
@@ -60,13 +60,13 @@ def pickup():
 	sign_in.click()
 
 	uname = driver.find_element(By.XPATH, value='//*[@id="username"]')
-	uname.send_keys(CREDS.USPS_NAME)
+	uname.send_keys(CREDS.USPS_UNAME)
 
 	pwd = driver.find_element(By.XPATH, value='//*[@id="password"]')
-	pwd.send_keys(CREDS.USPS_NAME + '\ue007')
+	pwd.send_keys(CREDS.USPS_PWD + '\ue007')
 
 	# find pickup
-	pickup_btn = driver.find_element(By.XPATH, value='/html/body/div[2]/div/nav/ul/li[2]/div/ul[1]/li[5]/a')
+	pickup_btn = driver.find_element(By.XPATH, value='/html/body/div[8]/section/div/div/div[2]/div[1]/p[4]/a')
 	pickup_btn.click()
 
 	avail_btn = driver.find_element(By.XPATH, value='//*[@id="webToolsAddressCheck"]')
