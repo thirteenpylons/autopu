@@ -65,53 +65,77 @@ def pickup():
 
     Probably more efficient to just open new tab...make work...Refactor later
     """
-    driver = webdriver.Chrome()
-    driver.get("https://www.usps.com")
+    try:
+        driver = webdriver.Chrome(
+            executable_path="/usr/lib/chromium-browser/chromedriver"
+        )
+        driver.get("https://www.usps.com")
 
-    sign_in = driver.find_element(By.XPATH, value='//*[@id="login-register-header"]')
-    sign_in.click()
+        sign_in = driver.find_element(
+            By.XPATH, value='//*[@id="login-register-header"]'
+        )
+        sign_in.click()
 
-    uname = driver.find_element(By.XPATH, value='//*[@id="username"]')
-    uname.send_keys(CREDS.USPS_UNAME)
+        driver.refresh()
 
-    pwd = driver.find_element(By.XPATH, value='//*[@id="password"]')
-    pwd.send_keys(CREDS.USPS_PWD + "\ue007")
+        uname = driver.find_element(By.XPATH, value='//*[@id="username"]')
+        uname.send_keys(CREDS.USPS_UNAME)
 
-    # find pickup
-    pickup_btn = driver.find_element(
-        By.XPATH, value="/html/body/div[8]/section/div/div/div[2]/div[1]/p[4]/a"
-    )
-    pickup_btn.click()
+        pwd = driver.find_element(By.XPATH, value='//*[@id="password"]')
+        pwd.send_keys(CREDS.USPS_PWD + "\ue007")
 
-    avail_btn = driver.find_element(By.XPATH, value='//*[@id="webToolsAddressCheck"]')
-    avail_btn.click()
+        ### !! NEED A WAY TO BYPASS BOT-DETECTION FOR LOGIN@USPS
 
-    loc_drp = driver.find_element(By.XPATH, value='//*[@id="packageLocation"]')
-    loc_drp.click()
+        # find login elem and click in case return doesn't work !!!
+        # sub = driver.find_element(By.XPATH, value='//*[@id="btn-submit"]')
+        # sub.click()
 
-    #### NEED TO VERIFY PATH ####
-    fdoor = driver.find_element(
-        By.XPATH, value="/html/body/div[5]/div/div/div[6]/div[1]/div/select/option[4]"
-    )
-    fdoor.click()
+        # wait...
+        driver.implicitly_wait(15)
 
-    reg_radio = driver.find_element(By.XPATH, value='//*[@id="pickup-regular-time"]')
-    reg_radio.click()
+        # find pickup
+        pickup_btn = driver.find_element(
+            By.XPATH, value="/html/body/div[8]/section/div/div/div[2]/div[1]/p[4]/a"
+        )
+        pickup_btn.click()
 
-    # anticipate next day will have to use datetime.now
-    # avoid calendar by using 'recurring pickup tool'(start/stop same day)
-    pu_tool = driver.find_element(
-        By.XPATH, value="/html/body/div[6]/div/div/div[4]/div[4]/div[4]/div[1]/h4"
-    )
-    pu_tool.click()
+        avail_btn = driver.find_element(
+            By.XPATH, value='//*[@id="webToolsAddressCheck"]'
+        )
+        avail_btn.click()
 
-    start_date = driver.find_element(
-        By.XPATH, value='//*[@id="recurring-pickup-tool-start-date-cal"]'
-    )
-    start_date.send_keys()
+        loc_drp = driver.find_element(By.XPATH, value='//*[@id="packageLocation"]')
+        loc_drp.click()
 
-    today = datetime.date.today()
+        #### NEED TO VERIFY PATH ####
+        fdoor = driver.find_element(
+            By.XPATH,
+            value="/html/body/div[5]/div/div/div[6]/div[1]/div/select/option[4]",
+        )
+        fdoor.click()
 
-    # TODO: log scheduled pickup for verification
+        reg_radio = driver.find_element(
+            By.XPATH, value='//*[@id="pickup-regular-time"]'
+        )
+        reg_radio.click()
 
-    driver.quit()
+        # anticipate next day will have to use datetime.now
+        # avoid calendar by using 'recurring pickup tool'(start/stop same day)
+        pu_tool = driver.find_element(
+            By.XPATH, value="/html/body/div[6]/div/div/div[4]/div[4]/div[4]/div[1]/h4"
+        )
+        pu_tool.click()
+
+        start_date = driver.find_element(
+            By.XPATH, value='//*[@id="recurring-pickup-tool-start-date-cal"]'
+        )
+        start_date.send_keys()
+
+        today = datetime.date.today()
+
+        # TODO: log scheduled pickup for verification
+
+        driver.quit()
+    except:
+        print("Something went wrong with usps")
+        driver.quit()
