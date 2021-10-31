@@ -18,81 +18,100 @@ import creds as CREDS
 
 
 def execute():
-	"""
-	Executes the application
-	"""
-	try:
-	#### This code can be modularized ####
-		driver = webdriver.Chrome(executable_path='/usr/lib/chromium-browser/chromedriver')
-		driver.get('https://www.etsy.com/your/shops/me/dashboard?ref=hdr-mcpa')
-		driver.implicitly_wait(15)
+    """
+    Executes the application
+    """
+    try:
+        #### This code can be modularized ####
+        driver = webdriver.Chrome(
+            executable_path="/usr/lib/chromium-browser/chromedriver"
+        )
+        driver.get("https://www.etsy.com/your/shops/me/dashboard?ref=hdr-mcpa")
+        driver.implicitly_wait(15)
 
-		email_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_email_field"]')
-		email_in.send_keys(CREDS.ETSY_UNAME)
-		pwd_in = driver.find_element(By.XPATH, value='//*[@id="join_neu_password_field"]')
-		pwd_in.send_keys(CREDS.ETSY_PWD + '\ue007')
+        email_in = driver.find_element(
+            By.XPATH, value='//*[@id="join_neu_email_field"]'
+        )
+        email_in.send_keys(CREDS.ETSY_UNAME)
+        pwd_in = driver.find_element(
+            By.XPATH, value='//*[@id="join_neu_password_field"]'
+        )
+        pwd_in.send_keys(CREDS.ETSY_PWD + "\ue007")
 
-		orders_btn = driver.find_element(By.XPATH, value='//*[@id="root"]/div/div[1]/div[3]/div/div[1]/div[2]/ul/li[5]/a')
-		orders_btn.click()
+        orders_btn = driver.find_element(
+            By.XPATH,
+            value='//*[@id="root"]/div/div[1]/div[3]/div/div[1]/div[2]/ul/li[5]/a',
+        )
+        orders_btn.click()
 
-		order_qty = driver.find_element(By.XPATH, value='//*[@id="browse-view"]/div/div[1]/div[2]/nav/ul/li[1]/a/span[2]').text
-		
-		# check for any new orders
-		if int(order_qty) > 0:
-			pickup()
-	except:
-		print('Something went wrong...')
-		driver.quit()
+        order_qty = driver.find_element(
+            By.XPATH,
+            value='//*[@id="browse-view"]/div/div[1]/div[2]/nav/ul/li[1]/a/span[2]',
+        ).text
 
-	driver.quit()
+        # check for any new orders
+        if int(order_qty) > 0:
+            pickup()
+    except:
+        print("Something went wrong...")
+        driver.quit()
+
+    driver.quit()
 
 
 def pickup():
-	"""
-	execute if there is a new order.
+    """
+    execute if there is a new order.
 
-	Probably more efficient to just open new tab...make work...Refactor later
-	"""
-	driver = webdriver.Chrome()
-	driver.get('https://www.usps.com')
+    Probably more efficient to just open new tab...make work...Refactor later
+    """
+    driver = webdriver.Chrome()
+    driver.get("https://www.usps.com")
 
-	sign_in = driver.find_element(By.XPATH, value='//*[@id="login-register-header"]')
-	sign_in.click()
+    sign_in = driver.find_element(By.XPATH, value='//*[@id="login-register-header"]')
+    sign_in.click()
 
-	uname = driver.find_element(By.XPATH, value='//*[@id="username"]')
-	uname.send_keys(CREDS.USPS_UNAME)
+    uname = driver.find_element(By.XPATH, value='//*[@id="username"]')
+    uname.send_keys(CREDS.USPS_UNAME)
 
-	pwd = driver.find_element(By.XPATH, value='//*[@id="password"]')
-	pwd.send_keys(CREDS.USPS_PWD + '\ue007')
+    pwd = driver.find_element(By.XPATH, value='//*[@id="password"]')
+    pwd.send_keys(CREDS.USPS_PWD + "\ue007")
 
-	# find pickup
-	pickup_btn = driver.find_element(By.XPATH, value='/html/body/div[8]/section/div/div/div[2]/div[1]/p[4]/a')
-	pickup_btn.click()
+    # find pickup
+    pickup_btn = driver.find_element(
+        By.XPATH, value="/html/body/div[8]/section/div/div/div[2]/div[1]/p[4]/a"
+    )
+    pickup_btn.click()
 
-	avail_btn = driver.find_element(By.XPATH, value='//*[@id="webToolsAddressCheck"]')
-	avail_btn.click()
+    avail_btn = driver.find_element(By.XPATH, value='//*[@id="webToolsAddressCheck"]')
+    avail_btn.click()
 
-	loc_drp = driver.find_element(By.XPATH, value='//*[@id="packageLocation"]')
-	loc_drp.click()
+    loc_drp = driver.find_element(By.XPATH, value='//*[@id="packageLocation"]')
+    loc_drp.click()
 
-	#### NEED TO VERIFY PATH ####
-	fdoor = driver.find_element(By.XPATH, value='/html/body/div[5]/div/div/div[6]/div[1]/div/select/option[4]')
-	fdoor.click()
+    #### NEED TO VERIFY PATH ####
+    fdoor = driver.find_element(
+        By.XPATH, value="/html/body/div[5]/div/div/div[6]/div[1]/div/select/option[4]"
+    )
+    fdoor.click()
 
-	reg_radio = driver.find_element(By.XPATH, value='//*[@id="pickup-regular-time"]')
-	reg_radio.click()
+    reg_radio = driver.find_element(By.XPATH, value='//*[@id="pickup-regular-time"]')
+    reg_radio.click()
 
-	# anticipate next day will have to use datetime.now
-	# avoid calendar by using 'recurring pickup tool'(start/stop same day)
-	pu_tool = driver.find_element(By.XPATH, value='/html/body/div[6]/div/div/div[4]/div[4]/div[4]/div[1]/h4')
-	pu_tool.click()
+    # anticipate next day will have to use datetime.now
+    # avoid calendar by using 'recurring pickup tool'(start/stop same day)
+    pu_tool = driver.find_element(
+        By.XPATH, value="/html/body/div[6]/div/div/div[4]/div[4]/div[4]/div[1]/h4"
+    )
+    pu_tool.click()
 
-	start_date = driver.find_element(By.XPATH, value='//*[@id="recurring-pickup-tool-start-date-cal"]')
-	start_date.send_keys()
+    start_date = driver.find_element(
+        By.XPATH, value='//*[@id="recurring-pickup-tool-start-date-cal"]'
+    )
+    start_date.send_keys()
 
-	today = datetime.date.today()
+    today = datetime.date.today()
 
+    # TODO: log scheduled pickup for verification
 
-	# TODO: log scheduled pickup for verification
-
-	driver.quit()
+    driver.quit()
